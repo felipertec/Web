@@ -1,0 +1,10 @@
+Create Database Web;
+
+USE Web;
+
+CREATE TABLE IF NOT EXIST Category{
+    idCategory int AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    Description VARCHAR(255) NOT NULL,
+    PRIMARY KEY('idCategory')
+};

@@ -2,9 +2,9 @@ Create Database Web;
 
 USE Web;
 
-CREATE TABLE IF NOT EXIST Category{
-    idCategory int AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
+CREATE TABLE IF NOT EXISTS Category(
+    idCategory int NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(50) NOT NULL,
     Description VARCHAR(255) NOT NULL,
-    PRIMARY KEY('idCategory')
-};
+    PRIMARY KEY(idCategory)
+);

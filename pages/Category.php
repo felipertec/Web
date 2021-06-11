@@ -1,30 +1,46 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categoria</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-    <div><h3><b><s>ICON</s></b></h3></div>
-    <div>
-        <h1 class="center">
-            Bem Vindo a Categoria!
+<?php
+        include 'template/header.php'
+?>
+    <div  class="center">
+        <h1>
+           Cadastro de Categoria!
         </h1>
     </div>
 
     <div class="center">
-        <form method="POST" name="formulario">
+        <form class="fCategory" method="post" name="formulario">
             <label>Nome da Categoria</label><br>  
             <input type="text" name="cNCategory"><br>
             <label>Descrição</label>  <br>
             <input type="text" name="cDescription"><br>
-            <button type="submit" class="botao" onclick="validar()">Cadastrar</button>
+           <button type="submit" name="acao" class="btnSubmitCategory" onclick="validar()">Cadastrar</button>
         </form>
     </div>
+    
+<?php
+require_once ("../db/pdoconfig.php");
 
-    <script src="../js/script.js"></script>
-</body>
-</html>
+    if(isset($_POST['acao'])){
+        $nameCategory = $_POST['cNCategory'];
+        $description = $_POST['cDescription'];
+
+    
+        if($_POST['cNCategory'] == "" || $_POST['cDescription'] == ""){
+            echo "<h3 style='color:red; text-align:center;'>Prencher todos os campos vazios!</h3>";
+        }else{
+
+            $sql = "INSERT INTO Category(Name,Description) VALUES (:cNCategory,:cDescription)";
+            $q = $pdo->prepare($sql);
+            $q->execute(array(
+                ':cNCategory' => $nameCategory,
+                'cDescription' => $description
+            ));
+
+            if($q){
+                echo "<p style='color:green; text-align: center;'>Cadastrado com sucesso!</p>";
+            }
+        }
+    }
+?>
+
+<?php include 'template/footer.php'?>

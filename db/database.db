@@ -8,3 +8,22 @@ CREATE TABLE IF NOT EXISTS Category(
     Description VARCHAR(255) NOT NULL,
     PRIMARY KEY(idCategory)
 );
+
+CREATE TABLE IF NOT EXISTS Image(
+    idImage int NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(50) NOT NULL,
+    PRIMARY KEY(idImage)
+);
+
+CREATE TABLE IF NOT EXISTS Product(
+    idProduct int NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(50) NOT NULL,
+    Description VARCHAR(255) NOT NULL,
+    Qtd int NOT NULL,
+    Price DOUBLE NOT NULL,
+    idCategory int,
+    idImage int,
+    PRIMARY KEY(idProduct),
+    FOREIGN KEY(idCategory) REFERENCES Category(idCategory),
+    FOREIGN KEY(idImage) REFERENCES Image(idImage)
+);

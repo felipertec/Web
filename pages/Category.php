@@ -26,7 +26,7 @@ require_once ("../db/pdoconfig.php");
 
     
         if($_POST['cNCategory'] == "" || $_POST['cDescription'] == ""){
-            echo "<h3 style='color:red; text-align:center;'>Prencher todos os campos vazios!</h3>";
+            echo "<h3 style='color:red; text-align:center;'>Preencher todos os campos vazios!</h3>";
         }else{
 
             $sql = "INSERT INTO Category(Name,Description) VALUES (:cNCategory,:cDescription)";

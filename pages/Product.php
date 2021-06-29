@@ -5,56 +5,69 @@
     require_once ("../db/pdoconfig.php");
 
     $msg = false;
-    
-    // Insere a imagem no banco de dados
-    if(isset($_FILES['archive'])){
-        $extension = strtolower(substr($_FILES['archive']['name'], -4));
-        $new_name = md5(time()) . $extension;
-        $directory = "../upload/";
-    
-        move_uploaded_file($_FILES['archive']['tmp_name'], $directory.$new_name);
+    try{
+        $pdo->beginTransaction();
+        // Insere a imagem no banco de dados
+        if(isset($_FILES['archive'])){
+            $extension = strtolower(substr($_FILES['archive']['name'], -4));
+            $new_name = md5(time()) . $extension;
+            $directory = "../upload/";
+        
+            move_uploaded_file($_FILES['archive']['tmp_name'], $directory.$new_name);
 
-        $sql_code = "INSERT INTO Image(idImage, Name) VALUES(null,'$new_name')";
-        if($pdo->query($sql_code)){
-            $msg = "Arquivo enviado com sucesso";
+            $sql_code = "INSERT INTO Image(Name) VALUES(?)";
 
+            $statement = $pdo->prepare($sql_code);
+            if($statement->execute([$new_name])){
+                $msg = "Arquivo enviado com sucesso";
+                echo $imageId = $pdo->lastInsertId();
+            }else{
+                throw new Exception('erro ao salvar a imagem!!');
+            }
         }else{
-            $msg = "Falha No Arquivo";
+            // adicionar imagem <default class=""></default>
         }
-    }
-    // Fim do cadastro de imagem.
+
+        // Fim do cadastro de imagem.
     
-    //Cadastro de Produto!
-    if(isset($_POST['action'])){
-        $nameProduct = $_POST['nProduct'];
-        $description = $_POST['dProduct'];
-        $quantityProduct = $_POST['qProduct'];
-        $priceProduct = $_POST['pProduct'];
-        $categoryProduct = $_POST['cProduct'];
+        //Cadastro de Produto!
+        if(isset($_POST['action'])){
+            $nameProduct = $_POST['nProduct'];
+            $description = $_POST['dProduct'];
+            $quantityProduct = $_POST['qProduct'];
+            $priceProduct = $_POST['pProduct'];
+            $categoryProduct = $_POST['cProduct'];
+            $imageProduct = $imageId;
 
 
-        if($_POST['nProduct'] == '' || $_POST['dProduct'] == '' || $_POST['qProduct'] == '' || $_POST['pProduct'] == ''){
-            echo "<h3 style='color:red;'>Preencher todos os campos vazios.</h3>";
-        }else{
-            $sql = "INSERT INTO Product(Name,Description,Qtd,Price,idCategory) VALUES(:nProduct,:dProduct,:qProduct,:pProduct,:cProduct)";
-            $q = $pdo->prepare($sql);
-            $q->execute(array(
-                ':nProduct' => $nameProduct,
-                ':dProduct' => $description,
-                ':qProduct' => $quantityProduct,
-                ':pProduct' => $priceProduct,
-                ':cProduct' => $categoryProduct
+            if($_POST['nProduct'] == '' || $_POST['dProduct'] == '' || $_POST['qProduct'] == '' || $_POST['pProduct'] == ''){
+                throw new Exception("Não foi possivel salvar o produto!!!");
+            }else{
+                $sql = "INSERT INTO Product(Name,Description,Qtd,Price,idCategory,idImage) VALUES(:nProduct,:dProduct,:qProduct,:pProduct,:cProduct,:archive)";
+                $q = $pdo->prepare($sql);
+                $q->execute(array(
+                    ':nProduct' => $nameProduct,
+                    ':dProduct' => $description,
+                    ':qProduct' => $quantityProduct,
+                    ':pProduct' => $priceProduct,
+                    ':cProduct' => $categoryProduct,
+                    ':archive' => $imageId
+                ));
 
-            ));
-
-            if($q){
-                echo "<p style='color:green; text-align: center;'>Cadastrado com sucesso!</p>";
+                if($q){
+                    echo "<p style='color:green; text-align: center;'>Cadastrado com sucesso!</p>";
+                }
             }
         }
+        
+        $pdo->commit();
+        
+    }catch(Exception $e){
+        echo "<h3 style='color:red;'>".$e->getMessage()."</h3>";
+        $pdo->rollBack();
+        
     }
- 
 
-    
     // fim de cadastro de produtos
 ?>
 <?php if($msg != false)echo $msg; ?>

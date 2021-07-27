@@ -13,7 +13,7 @@
             <input type="text" name="cNCategory"><br>
             <label>Descrição</label>  <br>
             <input type="text" name="cDescription"><br>
-           <button type="submit" name="acao" class="btnSubmitCategory" onclick="validar()">Cadastrar</button>
+           <button type="submit" name="acao" class="btnSubmitSend" onclick="validar()">Cadastrar</button>
         </form>
     </div>
     

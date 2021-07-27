@@ -8,7 +8,8 @@
     try{
         $pdo->beginTransaction();
         // Insere a imagem no banco de dados
-        if(isset($_FILES['archive'])){
+        
+        if(isset($_FILES['archive']) && empty($_FILES['archive'])){
             $extension = strtolower(substr($_FILES['archive']['name'], -4));
             $new_name = md5(time()) . $extension;
             $directory = "../upload/";
@@ -25,7 +26,7 @@
                 throw new Exception('erro ao salvar a imagem!!');
             }
         }else{
-            // adicionar imagem <default class=""></default>
+            $imageId = 1;
         }
 
         // Fim do cadastro de imagem.
@@ -34,14 +35,20 @@
         if(isset($_POST['action'])){
             $nameProduct = $_POST['nProduct'];
             $description = $_POST['dProduct'];
-            $quantityProduct = $_POST['qProduct'];
-            $priceProduct = $_POST['pProduct'];
+            $quantityProduct = (int)$_POST['qProduct'];     
+            $priceProduct = (float) str_replace(",",".",$_POST['pProduct']);
             $categoryProduct = $_POST['cProduct'];
             $imageProduct = $imageId;
 
 
+           
+
             if($_POST['nProduct'] == '' || $_POST['dProduct'] == '' || $_POST['qProduct'] == '' || $_POST['pProduct'] == ''){
-                throw new Exception("Não foi possivel salvar o produto!!!");
+                throw new Exception("Completar todos os campos vazios");
+            }elseif((is_numeric($_POST['qProduct']) != is_int($quantityProduct)) || (($quantityProduct == (float)$_POST['qProduct'] *=1)) == false){
+                throw new Exception("Tem que ser caracteres numericos inteiros no campo Quantidade");
+            }elseif($priceProduct >= 0 && is_string($priceProduct) && !is_float($_POST['pProduct'])){
+                throw new Exception("Os caracteres tem que ser numericos no campo Preço");
             }else{
                 $sql = "INSERT INTO Product(Name,Description,Qtd,Price,idCategory,idImage) VALUES(:nProduct,:dProduct,:qProduct,:pProduct,:cProduct,:archive)";
                 $q = $pdo->prepare($sql);
@@ -93,8 +100,11 @@
                     }
                 ?>
             </select><br>
-            Arquivo: <input type="file" name="archive">
-            <input type="submit" value="Salvar" name="action">
+            <label>Arquivo:</label> 
+            <div class="center">
+                <input class="Input_Product" type="file" name="archive" onchange="readURL(this);">    
+            </div>
+            <input type="submit" style="width: 10%; padding: 12px 20px; margin: 8px 500px;" class="btnSubmitSend" value="Salvar" name="action">
         </form>
     </div>
 

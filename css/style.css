@@ -22,7 +22,7 @@ body{
     outline: none;
 }
 
-.btnSubmitCategory{
+.btnSubmitSend{
     margin: 5px;
     display: inline-block;
     padding: 10px 25px;
@@ -37,13 +37,128 @@ body{
     box-shadow: 0 9px #999;
 }
 
-.btnSubmitCategory:hover{
+.btnSubmitSend:hover{
     background-color: #3e8e41;
 }
 
-.btnSubmitCategory:active{
+.btnSubmitSend:active{
     background-color: #3e8e41;
     box-shadow: 0 2px #666;
     transform: translateY(4px);
 }
 
+/* ----- Css para Pagina de Produtos ------*/
+.fProduct input[type=text]{
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 400px;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+.fProduct label{
+    margin: 8px 400px;
+}
+
+.fProduct input[type=text]:focus{
+    border: 3px solid #555;
+}
+
+.fProduct select{
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 400px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+}
+
+.fProduct input[type='file'] {
+    width: 30%;
+    text-align: center;
+    padding: auto;
+    margin: 8px 400px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    padding: 6px 20px
+  }
+
+  .fProduct .btnSubmitSend input[type="submit"]{
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 400px;
+  }
+
+
+/* -----  fim Pagina de Produtos -----*/
+
+/* ----- formulario de Usuario ----- */
+.fUser input[type=text]{
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 400px;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+.fUser input[type=email]{
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 400px;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+.fUser input[type=date]{
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 400px;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+.fUser input[type=number]{
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 400px;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
+.fUser label{
+    margin: 8px 400px;
+}
+
+.fUser input[type=text]:focus{
+    border: 3px solid #555;
+}
+
+.fUser input[type=email]:focus{
+    border: 3px solid #555;
+}
+
+.fUser input[type=date]:focus{
+    border: 3px solid #555;
+}
+
+.fUser input[type=number]:focus{
+    border: 3px solid #555;
+}
+
+/* ----- fim do formlulario de usuario ---- */

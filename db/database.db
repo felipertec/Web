@@ -8,3 +8,42 @@ CREATE TABLE IF NOT EXISTS Category(
     Description VARCHAR(255) NOT NULL,
     PRIMARY KEY(idCategory)
 );
+
+CREATE TABLE IF NOT EXISTS Image(
+    idImage int NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(50) NOT NULL,
+    PRIMARY KEY(idImage)
+);
+
+CREATE TABLE IF NOT EXISTS Product(
+    idProduct int NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(50) NOT NULL,
+    Description VARCHAR(255) NOT NULL,
+    Qtd int NOT NULL,
+    Price DOUBLE NOT NULL,
+    idCategory int,
+    idImage int,
+    PRIMARY KEY(idProduct),
+    FOREIGN KEY(idCategory) REFERENCES Category(idCategory),
+    FOREIGN KEY(idImage) REFERENCES Image(idImage)
+);
+
+INSERT INTO Image(idImage,Name)VALUES(1,'Default.png');
+
+CREATE TABLE IF NOT ExISTS User(
+    idUser int NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(50) NOT NULL,
+    Last_Name VARCHAR(50) NOT NULL,
+    Email VARCHAR(50) NOT NULL UNIQUE, 
+    Birth DATE NOT NULL,
+    Address VARCHAR (50) NOT NULL,
+    Number int NOT NULL,
+    DistrictUser VARCHAR(50) NOT NULL,
+    City VARCHAR(50) NOT NULL,
+    State VARCHAR(2),
+    Zip_code varchar(8),
+    PRIMARY KEY(idUser)
+);
+
+INSERT INTO User(idUser,Name, Last_Name, Email, Birth, Address, Number, DistrictUser, City, State, Zip_code) 
+          VALUES(1,'teste','teste','teste@teste.com',1991-01-01,'teste',11,'teste','teste','teste',11660-000);

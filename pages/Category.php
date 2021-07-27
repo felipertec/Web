@@ -13,7 +13,7 @@
             <input type="text" name="cNCategory"><br>
             <label>Descrição</label>  <br>
             <input type="text" name="cDescription"><br>
-           <button type="submit" name="acao" class="btnSubmitCategory" onclick="validar()">Cadastrar</button>
+           <button type="submit" name="acao" class="btnSubmitSend" onclick="validar()">Cadastrar</button>
         </form>
     </div>
     
@@ -26,7 +26,7 @@ require_once ("../db/pdoconfig.php");
 
     
         if($_POST['cNCategory'] == "" || $_POST['cDescription'] == ""){
-            echo "<h3 style='color:red; text-align:center;'>Prencher todos os campos vazios!</h3>";
+            echo "<h3 style='color:red; text-align:center;'>Preencher todos os campos vazios!</h3>";
         }else{
 
             $sql = "INSERT INTO Category(Name,Description) VALUES (:cNCategory,:cDescription)";
